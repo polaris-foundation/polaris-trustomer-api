@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: dhos-trustomer-api-cm
+  labels:
+    app: dhos-trustomer-api
+data:
+  ALLOW_DROP_DATA: "{{.Values.allow_drop_data}}"
+  ENVIRONMENT: {{ .Values.environment }}
+  LOG_LEVEL: {{ .Values.log_level | default "INFO" }}
+  TRUSTOMER_CONFIG_MOUNT: "/trustomer-config"
+  COUNTLY_APP_KEY_MOBILE_NONPROD_OVERRIDE: secret
+  COUNTLY_APP_KEY_WEBAPP_NONPROD_OVERRIDE: secret

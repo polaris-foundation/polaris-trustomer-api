@@ -1,0 +1,65 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dhos-trustomer-api-dep
+  annotations:
+    checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
+  labels:
+    app: dhos-trustomer-api
+    sh/version: {{ .Values.imagetag }}
+    sh/type: api
+{{ toYaml .Values.labels | indent 4 }}
+spec:
+  replicas: {{ .Values.replicas | default 2 }}
+  selector:
+    matchLabels:
+      app: dhos-trustomer-api
+  template:
+    metadata:
+      labels:
+        app: dhos-trustomer-api
+        sh/version: {{ .Values.imagetag }}
+        sh/type: api
+{{ toYaml .Values.labels | indent 8 }}
+    spec:
+      initContainers:
+      - name: trustomer-files-mount
+        image: "{{ .Values.image.trustomer_files }}:{{ .Values.trustomer_files_imagetag }}"
+        imagePullPolicy: {{ .Values.imagePullPolicy }}
+        volumeMounts:
+          - name: trustomer-config
+            mountPath: /trustomer-config
+        command: [ '/bin/sh', '-c', 'cp -rf /content/* /trustomer-config/' ]
+      volumes:
+        - name: trustomer-config
+          emptyDir: { }
+      containers:
+      - name: dhos-trustomer-api
+        image: "{{ .Values.image.api }}:{{ .Values.imagetag }}"
+        imagePullPolicy: {{ .Values.imagePullPolicy }}
+        envFrom:
+        - configMapRef:
+            name: dhos-trustomer-api-cm
+        ports:
+        - containerPort: 5000
+        livenessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /running
+            port: 5000
+            scheme: HTTP
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 30
+        readinessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /running
+            port: 5000
+            scheme: HTTP
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 20
+        volumeMounts:
+          - name: trustomer-config
+            mountPath: /trustomer-config

@@ -1,0 +1,65 @@
+[tool.poetry]
+name = "she-dhos-trustomer-api"
+version = "0.0.1"
+description = "Trustomer API to manage configuration"
+authors = ["Jon Daly <jonathan.daly@sensynehealth.com>"]
+keywords = ["Trustomer", "Configuration", "DHOS"]
+repository = "https://github.com/draysontechnologies/dhos-trustomer-api"
+
+[[tool.poetry.source]]
+name = "sensynehealth"
+url = "https://pypi.fury.io/sensynehealth/"
+
+[tool.poetry.dependencies]
+python = "^3.9"
+dhos-redis = "1.*"
+flask-batteries-included = {version = "3.*", extras = ["apispec"]}
+jsonschema = "3.*"
+pydantic = "1.*"
+she-logging = "1.*"
+
+[tool.poetry.dev-dependencies]
+bandit = "*"
+black = "*"
+coloredlogs = "*"
+coverage = "*"
+isort = "*"
+mock = "*"
+mypy = "*"
+pytest = "*"
+pytest-dhos = { version = "1.*", extras=["fbi"] }
+pytest-flask = "*"
+pytest-mock = "*"
+requests_mock = "*"
+safety = "*"
+tox = "*"
+types-mock = "*"
+types-PyYAML = "*"
+types-waitress = "*"
+
+[tool.mypy]
+namespace_packages=true
+ignore_missing_imports=false
+disallow_untyped_defs=true
+
+[[tool.mypy.overrides]]
+module = [
+    "jose.*",
+    "apispec.*",
+    "apispec_webframeworks.*",
+    "connexion",
+    "dhosredis",
+    "jsonschema"
+]
+ignore_missing_imports = true
+
+[tool.isort]
+profile = "black"
+known_third_party = ["_pytest",  "behave", "clients", "environs", "fastapi_batteries_included",  "pytest", "pytest_mock", "she_logging", "yaml"]
+
+[tool.black]
+line-length = 88
+target-version = ["py39"]
+
+[tool.pytest.ini_options]
+filterwarnings = "ignore::DeprecationWarning:marshmallow.fields"

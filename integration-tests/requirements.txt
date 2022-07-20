@@ -1,0 +1,9 @@
+behave
+black
+environs
+isort
+mypy
+reportportal-behave-client==1.*
+requests
+she-logging==1.*
+types-requests

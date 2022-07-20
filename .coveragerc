@@ -1,0 +1,17 @@
+[paths]
+source =
+    dhos_trustomer_api/*
+
+[report]
+exclude_lines =
+  app.config
+
+omit =
+  */__main__.py
+  dhos_trustomer_api/app.py
+  dhos_trustomer_api/autoapp.py
+
+fail_under = 95
+
+show_missing = true
+skip_covered = true

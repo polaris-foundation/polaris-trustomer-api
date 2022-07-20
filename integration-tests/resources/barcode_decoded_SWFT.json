@@ -1,0 +1,9 @@
+{
+    "groups": {
+        "dob": "01-Feb-2011",
+        "firstname": "Test",
+        "lastname": "Patient",
+        "mrn": "12345",
+        "nhs": "1122334455"
+    }
+}

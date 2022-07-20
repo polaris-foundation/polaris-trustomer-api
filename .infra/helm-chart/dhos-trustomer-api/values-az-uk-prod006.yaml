@@ -1,0 +1,11 @@
+environment: PRODUCTION
+imagePullPolicy: IfNotPresent
+imagetag: dummy # Overridden by Argo
+allow_drop_data: false
+host_env: azure
+
+ingress:
+  hostName: api-prod.sensynehealth.local
+
+# This determines the version of the config used in this environment.
+trustomer_files_imagetag: cb-1064

@@ -1,0 +1,12 @@
+environment: DEVELOPMENT
+imagePullPolicy: Always
+imagetag: dummy # Overridden by Argo
+allow_drop_data: true
+host_env: azure
+log_level: DEBUG
+
+ingress:
+  hostName: api-dev.sensynehealth.local
+
+# This determines the version of the config used in this environment.
+trustomer_files_imagetag: dev

@@ -1,0 +1,24 @@
+image:
+  api: sensynehealth.azurecr.io/dhos/dhos-trustomer-api
+  utils: sensynehealth.azurecr.io/dhos/dhos-utils
+  trustomer_files: sensynehealth.azurecr.io/dhos/dhos-trustomer-files
+
+replicas: 2
+trustomer_files_imagetag: dummy
+utilsVersion: 0.1.27
+
+labels:
+  sh/group: dhos
+  sh/component: trustomer
+  sh/tier: back
+  sh/database: postgres
+
+ingress:
+  enabled: true
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+    nginx.ingress.kubernetes.io/auth-tls-verify-client: 'on'
+    nginx.ingress.kubernetes.io/auth-tls-secret: 'dhos-mgmt/internal-mtls-cert'
+    nginx.ingress.kubernetes.io/auth-tls-verify-depth: '2'
+    nginx.ingress.kubernetes.io/x-forwarded-prefix: /dhos-trustomer

@@ -1,0 +1,4 @@
+apiVersion: v1
+name: dhos-trustomer-api
+description: DHOS Trustomer API
+version: 1.0.0

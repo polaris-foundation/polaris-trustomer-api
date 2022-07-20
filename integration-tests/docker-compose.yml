@@ -1,0 +1,58 @@
+x-environment: &COMMON_ENVIRONMENT
+  ENVIRONMENT: DEVELOPMENT
+  ALLOW_DROP_DATA: "true"
+  PROXY_URL: http://localhost
+  HS_ISSUER: http://localhost/
+  HS_KEY: secret
+  AUTH0_AUDIENCE: http://localhost/
+  AUTH0_CLIENT_ID: dummy
+  REDIS_HOST: localhost
+  REDIS_PORT: 6379
+  REDIS_PASSWORD: doesntmatter
+  LOG_LEVEL: INFO
+  LOG_FORMAT: COLOUR
+
+services:
+  dhos-trustomer-integration-tests:
+    container_name: "dhos-trustomer-integration-tests"
+    build:
+      context: .
+      args:
+        - PIP_EXTRA_INDEX_URL
+    environment:
+      <<: *COMMON_ENVIRONMENT
+      BEHAVE_ARGS: ${BEHAVE_ARGS:-}
+      REPORT_PORTAL_URL: ${REPORT_PORTAL_URL:-}
+      REPORT_PORTAL_TOKEN: ${REPORT_PORTAL_TOKEN:-}
+      REPORT_PORTAL_PROJECT: ${REPORT_PORTAL_PROJECT:-}
+      ENVIRONMENT: ${ENVIRONMENT:-}
+      RELEASE: ${RELEASE:-}
+      SYSTEM_JWT_SCOPE: >-
+        read:gdm_trustomer read:send_trustomer
+    command: >
+      bash -c "behave --no-capture --no-logcapture ${BEHAVE_ARGS:-}"
+    volumes:
+      - ../trustomer-config-dummy:/trustomer-config
+    depends_on:
+      "dhos-trustomer-api":
+        condition: service_healthy
+
+  dhos-trustomer-api:
+    container_name: "dhos-trustomer-api"
+    build:
+      context: ../
+      args:
+        - GEMFURY_DOWNLOAD_KEY
+    environment:
+      <<: *COMMON_ENVIRONMENT
+    ports:
+      - "5000:5000"
+    command: >
+      bash -c "python -m dhos_trustomer_api"
+    volumes:
+      - ../trustomer-config-dummy:/trustomer-config
+    healthcheck:
+      test: curl -f http://localhost:5000/running || false
+      interval: 3s
+      retries: 40
+      start_period: 10s
