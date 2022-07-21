@@ -42,21 +42,14 @@ docker run <tag>
      -->
 
 <!-- markdown-swagger -->
- Endpoint                                                           | Method | Auth? | Description                                                                                            
- ------------------------------------------------------------------ | ------ | ----- | -------------------------------------------------------------------------------------------------------
- `/running`                                                         | GET    | No    | Verifies that the service is running. Used for monitoring in kubernetes.                               
- `/version`                                                         | GET    | No    | Get the version number, circleci build number, and git hash.                                           
- `/dhos/v1/patient/{patient_id}/installation`                       | POST   | Yes   | Create a new patient installation using the details in the request body                                
- `/dhos/v1/patient/{patient_id}/installation/{installation_id}`     | PATCH  | Yes   | Update the patient installation with the provided UUID using the details provided in the request body  
- `/dhos/v1/patient/{patient_id}/installation/{installation_id}`     | GET    | Yes   | Get the patient installation with the provided UUID                                                    
- `/dhos/v1/patient/{patient_id}/latest_installation`                | GET    | Yes   | Get the latest installation for the patient with the provided UUID                                     
- `/dhos/v1/clinician/{clinician_id}/installation`                   | POST   | Yes   | Create a new clinician installation using the details in the request body                              
- `/dhos/v1/clinician/{clinician_id}/installation/{installation_id}` | GET    | Yes   | Get the clinician installation with the provided UUID                                                  
- `/dhos/v1/clinician/{clinician_id}/installation/{installation_id}` | PATCH  | Yes   | Update the clinician installation with the provided UUID using the details provided in the request body
- `/dhos/v1/clinician/{clinician_id}/latest_installation`            | GET    | Yes   | Get the latest installation for the clincian with the provided UUID                                    
- `/dhos/v1/patient/{patient_id}/blood_glucose_meter`                | POST   | Yes   | Create a patient blood glucose meter using the details in the request body                             
- `/dhos/v1/patient/{patient_id}/blood_glucose_meter/{meter_id}`     | PATCH  | Yes   | Update a patient blood glucose meter using the details in the request body                             
- `/dhos/v1/patient/{patient_id}/blood_glucose_meter/{meter_id}`     | GET    | Yes   | Get a patient blood glucose meter by UUID                                                              
+ Endpoint                                   | Method | Auth? | Description                                                                       
+ ------------------------------------------ | ------ | ----- | ----------------------------------------------------------------------------------
+ `/running`                                 | GET    | No    | Verifies that the service is running. Used for monitoring in kubernetes.          
+ `/version`                                 | GET    | No    | Get the version number, circleci build number, and git hash.                      
+ `/dhos/v1/trustomer`                       | GET    | No    | Get a trustomer's configuration including product-specific settings               
+ `/dhos/v1/escalation_policy/{policy_name}` | GET    | No    | Get a trustomer's escalation policy                                               
+ `/dhos/v1/parse_patient_barcode`           | POST   | No    | Parse a patient barcode into its constituent parts, including name and identifiers
+ `/dhos/v1/trustomer/{customer_code}`       | GET    | No    | Get specified trustomer's configuration including product-specific settings       
 <!-- /markdown-swagger -->
 
 ## Requirements
