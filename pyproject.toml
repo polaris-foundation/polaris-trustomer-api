@@ -4,7 +4,7 @@ version = "0.0.1"
 description = "Trustomer API to manage configuration"
 authors = ["Jon Daly <jonathan.daly@sensynehealth.com>"]
 keywords = ["Trustomer", "Configuration", "Polaris"]
-repository = "https://github.com/polaris-foundation/dhos-trustomer-api"
+repository = "https://github.com/polaris-foundation/polaris-trustomer-api"
 
 [tool.poetry.dependencies]
 python = "^3.9"
